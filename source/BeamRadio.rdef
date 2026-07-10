@@ -1,5 +1,5 @@
 
-resource app_signature "application/x-vnd.Fishpond-StreamRadio";
+resource app_signature "application/x-vnd.be-quiet-home-beamradio";
 
 resource app_version {
 	major = 1, middle = 0, minor = 0,

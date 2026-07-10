@@ -8,7 +8,7 @@
 ## file:///system/develop/documentation/makefile-engine.html
 
 # The name of the binary.
-NAME = ../../dist/StreamRadio
+NAME = ../../dist/BeamRadio
 
 # The type of binary, must be one of:
 #	APP:	Application
@@ -18,7 +18,7 @@ NAME = ../../dist/StreamRadio
 TYPE = APP
 
 # If you plan to use localization, specify the application's MIME signature.
-APP_MIME_SIG = application/x-vnd.Fishpond-StreamRadio
+APP_MIME_SIG = application/x-vnd.be-quiet-home-beamradio
 
 #	The following lines tell Pe and Eddie where the SRCS, RDEFS, and RSRCS are
 #	so that Pe and Eddie can fill them in for you.
@@ -51,7 +51,7 @@ SRCS = \
 
 #	Specify the resource definition files to use. Full or relative paths can be
 #	used.
-RDEFS = StreamRadio.rdef
+RDEFS = BeamRadio.rdef
 
 #	Specify the resource files to use. Full or relative paths can be used.
 #	Both RDEFS and RSRCS can be utilized in the same Makefile.

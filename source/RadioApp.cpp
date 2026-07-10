@@ -76,7 +76,7 @@ RadioApp::ArgvReceived(int32 argc, char** argv)
 		char* arg = argv[i];
 		if (strncmp(arg, "--help", 7) == 0) {
 			printf(
-				B_TRANSLATE("Usage: StreamRadio <filename>\n"
+				B_TRANSLATE("Usage: BeamRadio <filename>\n"
 							"<filename> should be a Shoutcast playlist file.\n"
 							"If the station already exists, it is made to play "
 							"otherwise it is added.\n"));
@@ -105,11 +105,11 @@ RadioApp::ArgvReceived(int32 argc, char** argv)
 void
 RadioApp::AboutRequested()
 {
-	BAboutWindow* about = new BAboutWindow(B_TRANSLATE_SYSTEM_NAME("StreamRadio"), kAppSignature);
+	BAboutWindow* about = new BAboutWindow(B_TRANSLATE_SYSTEM_NAME("BeamRadio"), kAppSignature);
 
 	const char* kAuthors[] = {"Fishpond", "Humdinger", "Jacob Secunda", "Javier Steinaker", NULL};
 
-	const char* kCopyright = "The HaikuArchives team";
+	const char* kCopyright = "The HaikuArchives team and Be-Quiet-Home contributors";
 
 	about->AddDescription(B_TRANSLATE("A player for online radio."));
 	about->AddAuthors(kAuthors);

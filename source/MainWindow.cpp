@@ -45,7 +45,7 @@
 
 
 MainWindow::MainWindow()
-	: BWindow(BRect(0, 0, 400, 200), B_TRANSLATE_SYSTEM_NAME("StreamRadio"), B_DOCUMENT_WINDOW,
+	: BWindow(BRect(0, 0, 400, 200), B_TRANSLATE_SYSTEM_NAME("BeamRadio"), B_DOCUMENT_WINDOW,
 		B_AUTO_UPDATE_SIZE_LIMITS),
 	  fStationFinder(NULL)
 {
@@ -323,8 +323,8 @@ MainWindow::MessageReceived(BMessage* message)
 		case MSG_HELP:
 		{
 			BUrl userguide = BUrl(
-				"https://github.com/HaikuArchives/"
-				"StreamRadio/blob/master/docs/userguide.md");
+				"https://github.com/Be-Quiet-Home/"
+				"BeamRadio/blob/master/docs/userguide.md");
 			userguide.OpenWithPreferredApplication(true);
 
 			break;

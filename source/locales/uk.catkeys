@@ -1,4 +1,4 @@
-1	Ukrainian	application/x-vnd.Fishpond-StreamRadio	1780791103
+1	Ukrainian	application/x-vnd.be-quiet-home-beamradio	1780791103
 %station% now plays %title%	MainWindow		%station% відтворює %title%
 About	MainWindow		Про програму
 Add station failed	MainWindow		Не вдалося додати радіостанцію
@@ -26,7 +26,7 @@ A directory for saving stations has been created in your settings folder. Link t
 OK	Station		OK
 Stations directory created	Station		Створено каталог із радіостанціями
 A player for online radio.	RadioApp		A player for online radio.
-Usage: StreamRadio <filename>\n<filename> should be a Shoutcast playlist file.\nIf the station already exists, it is made to play otherwise it is added.\n	RadioApp		Використання: StreamRadio <filename>\n<filename> має бути файлом списку відтворення Shoutcast.\nЯкщо радіостанція вже існує, вона відтворюватиметься, інакше її буде додано.\n
+Usage: BeamRadio <filename>\n<filename> should be a Shoutcast playlist file.\nIf the station already exists, it is made to play otherwise it is added.\n	RadioApp		Використання: BeamRadio <filename>\n<filename> має бути файлом списку відтворення Shoutcast.\nЯкщо радіостанція вже існує, вона відтворюватиметься, інакше її буде додано.\n
 Add	StationFinder		Додати
 Add station failed	StationFinder		Не вдалося додати радіостанцію
 Find stations	StationFinder		Знайти радіостанції
@@ -41,4 +41,4 @@ Name	StationPanel		Назва
 Station URL	StationPanel		URL-адреса радіостанції
 Stream URL	StationPanel		URL-адреса потоку
 listenlive.eu [experimental]	StationFinderListenLive		listenlive.eu [експериментально]
-StreamRadio	System name		StreamRadio
+BeamRadio	System name		BeamRadio

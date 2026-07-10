@@ -1,7 +1,7 @@
 ![icon](icon.png)
-# StreamRadio user guide
+# BeamRadio user guide
 
-StreamRadio is an open-source native Haiku internet radio player created by Fishpond and currently maintained at HaikuArchives. It allows users to find, add, manage and listen to online radio stations.
+BeamRadio is an open-source native Haiku internet radio player forked from StreamRadio. It preserves the original small Haiku-native radio-player idea while the Be-Quiet-Home revival track updates project identity, buildability, documentation, and later responsiveness/error-culture issues.
 
 ---
 
@@ -20,17 +20,17 @@ StreamRadio is an open-source native Haiku internet radio player created by Fish
 
 ## Installation <a name = "part_install"></a>
 
-StreamRadio is available through HaikuDepot.
+BeamRadio is currently an early revival fork and is built from source. The original StreamRadio package remains the HaikuDepot package until BeamRadio reaches a release-ready state.
 
-StreamRadio can also be built from the source available at [HaikuArchives](https://github.com/HaikuArchives/StreamRadio). It depends on libxml2 (installable with *pkgman install devel:libxml2* from Terminal).
+BeamRadio source is maintained at [Be-Quiet-Home/BeamRadio](https://github.com/Be-Quiet-Home/BeamRadio). It depends on libxml2 (installable with *pkgman install devel:libxml2* from Terminal).
 
-Bugs and enhancement issues can be filed at that same HaikuArchives page. Help with translations is welcome at [Polyglot](https://i18n.kacperkasper.pl/projects/29).
+Bugs and enhancement issues can be filed at the BeamRadio repository. Translation files are inherited from StreamRadio and will be refreshed in a later localization phase.
 
 ## First run <a name = "part_first_run"></a>
 
 ![FirstRun](screenshots/00_First_run_Alert.png)
  
-When StreamRadio is launched for the first time, you'll see an alert, telling you that a folder "Stations" has been created in your "settings" folder. You can link that folder to your Desktop or the Deskbar menu (*ln -s ~/config/settings/Stations ~/config/settings/deskbar/menu/*) to conveniently play stations directly.
+When BeamRadio is launched for the first time, you'll see an alert, telling you that a folder "Stations" has been created in your "settings" folder. You can link that folder to your Desktop or the Deskbar menu (*ln -s ~/config/settings/Stations ~/config/settings/deskbar/menu/*) to conveniently play stations directly.
 
 ![FirstRun](screenshots/01_First_run_GUI.png)
 
@@ -41,7 +41,7 @@ After acknowledging that alert, an empty window opens, as you haven't added any 
 ![AddNewStation](screenshots/02_Add_New_Stations_1.png)
 
 ### Service
-StreamRadio uses the [Community Radio Browser](http://www.radio-browser.info) as a service that provides a list of online radio stations. Click on the ![Web](bnWeb.png) icon next to it to open the homepage of that service.
+BeamRadio uses the [Community Radio Browser](http://www.radio-browser.info) as a service that provides a list of online radio stations. Click on the ![Web](bnWeb.png) icon next to it to open the homepage of that service.
 
 ### Search by
 This menu allows you to select your search criteria, like name, tag, language, country etc.

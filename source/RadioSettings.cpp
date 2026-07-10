@@ -25,7 +25,7 @@
 #include "RadioSettings.h"
 
 
-const char* kSettingsFileName = "StreamRadio.settings";
+const char* kSettingsFileName = "BeamRadio.settings";
 
 
 StationsList::StationsList()
