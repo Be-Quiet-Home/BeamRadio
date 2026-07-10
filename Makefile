@@ -1,7 +1,7 @@
 APP := dist/BeamRadio
 SOURCE_DIR := source
 
-.PHONY: all build clean smoke help
+.PHONY: all build clean smoke smoke-gui help
 
 all: build
 
@@ -32,10 +32,17 @@ smoke:
 		exit 1; \
 	fi
 
+smoke-gui: build
+	@echo "BeamRadio: smoke-gui"
+	@echo "  close the main window to complete the smoke"
+	@./$(APP)
+	@echo "BeamRadio: smoke-gui ok: application exited cleanly"
+
 help:
 	@echo "BeamRadio targets:"
 	@echo "  make        build BeamRadio"
 	@echo "  make build  build BeamRadio"
 	@echo "  make clean  remove generated build output"
-	@echo "  make smoke  verify built app exists"
+	@echo "  make smoke      verify built app exists"
+	@echo "  make smoke-gui  launch app and verify clean exit"
 	@echo "  make help   show this help"

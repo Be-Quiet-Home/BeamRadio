@@ -8,7 +8,7 @@ It keeps the existing Haiku-native station/file model, improves buildability, re
 
 ## Status
 
-Revival baseline in progress. Phases 0001 through 0007 established the BeamRadio identity, root build entrypoint, warning cleanup, and the current project-owned build flag baseline.
+Revival baseline in progress. Phases 0001 through 0009 established the BeamRadio identity, root build entrypoint, warning cleanup, build flag baseline, re-entry documentation, and a repeatable GUI lifecycle smoke.
 
 Playback, station storage, search behavior, and visible UI behavior remain intentionally unchanged by these baseline phases.
 
@@ -30,7 +30,13 @@ make smoke
 
 The root `Makefile` delegates visibly to `source/Makefile`. Use `make help` to list the supported root targets.
 
-The application binary is written to `dist/BeamRadio`.
+For the interactive GUI lifecycle smoke, run:
+
+```sh
+make smoke-gui
+```
+
+Close the main window to complete the smoke. The application binary is written to `dist/BeamRadio`.
 
 ## Scope
 
