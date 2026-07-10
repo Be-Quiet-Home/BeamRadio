@@ -8,9 +8,9 @@ The project keeps the existing Haiku-native station/file model, improves buildab
 
 ## Current status
 
-Phase 0001 adopts the BeamRadio identity and records the fork boundary.
+Phases 0001 through 0007 establish the BeamRadio identity, root build entrypoint, warning cleanup, and project-owned build flag baseline.
 
-Playback, station storage behavior, search behavior, and visible UI behavior are intentionally unchanged in this phase.
+Playback, station storage behavior, search behavior, and visible UI behavior are intentionally unchanged by these baseline phases.
 
 ## Goals
 
@@ -25,7 +25,7 @@ Playback, station storage behavior, search behavior, and visible UI behavior are
 
 - No Qt, GTK, Electron, or foreign desktop framework.
 - No general media-center scope.
-- No BeTuned integration in the identity phase.
+- No BeTuned integration before a later explicit decision.
 - No Deskbar, Replicant, or mini-mode feature work before the base app is calm.
 - No migration from existing StreamRadio settings in the identity phase.
 - No database replacement of the station-file model without a later explicit decision.

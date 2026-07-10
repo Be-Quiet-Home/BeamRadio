@@ -8,7 +8,9 @@ It keeps the existing Haiku-native station/file model, improves buildability, re
 
 ## Status
 
-Early revival fork. The first project phase adopts the BeamRadio identity and documents the fork boundary without changing playback, station storage, search behavior, or UI behavior.
+Revival baseline in progress. Phases 0001 through 0007 established the BeamRadio identity, root build entrypoint, warning cleanup, and the current project-owned build flag baseline.
+
+Playback, station storage, search behavior, and visible UI behavior remain intentionally unchanged by these baseline phases.
 
 ## Build
 
@@ -18,13 +20,15 @@ On Haiku, install the required development package first:
 pkgman install devel:libxml2
 ```
 
-Then build from the source directory:
+Then build from the repository root:
 
 ```sh
-cd source
 make clean
 make
+make smoke
 ```
+
+The root `Makefile` delegates visibly to `source/Makefile`. Use `make help` to list the supported root targets.
 
 The application binary is written to `dist/BeamRadio`.
 
@@ -36,7 +40,7 @@ Non-goals for the revival track:
 
 - no Qt, GTK, Electron, or foreign desktop framework
 - no general media-center scope
-- no BeTuned integration in the identity phase
+- no BeTuned integration before a later explicit decision
 - no Deskbar, Replicant, or mini-mode feature work before the base app is calm
 - no migration from existing StreamRadio settings in the identity phase
 
