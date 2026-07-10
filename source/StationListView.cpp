@@ -64,7 +64,7 @@ StationListViewItem::State()
 
 
 void
-StationListViewItem::DrawItem(BView* owner, BRect frame, bool complete)
+StationListViewItem::DrawItem(BView* owner, BRect frame, bool)
 {
 	int index = ((BListView*)owner)->IndexOf(this);
 
@@ -140,14 +140,14 @@ StationListViewItem::DrawBufferFillBar(BView* owner, BRect frame)
 
 
 void
-StationListViewItem::Update(BView* owner, const BFont* font)
+StationListViewItem::Update(BView*, const BFont*)
 {
 	SetHeight(SLV_HEIGHT);
 }
 
 
 void
-StationListViewItem::StateChanged(StreamPlayer::PlayState newState)
+StationListViewItem::StateChanged(StreamPlayer::PlayState)
 {
 	if (fList != NULL && fList->LockLooperWithTimeout(0) == B_OK) {
 		fList->InvalidateItem(fList->IndexOf(this));

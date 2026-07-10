@@ -218,6 +218,13 @@ BAdapterIO::BAdapterIO(int32 flags, bigtime_t timeout)
 
 
 BAdapterIO::BAdapterIO(const BAdapterIO&)
+	: BMediaIO(),
+	  fFlags(0),
+	  fBuffer(NULL),
+	  fTotalSize(0),
+	  fOpened(false),
+	  fSeekSem(-1),
+	  fInputAdapter(NULL)
 {
 	// copying not allowed...
 }
@@ -398,7 +405,7 @@ BAdapterIO::BuildInputAdapter()
 
 
 status_t
-BAdapterIO::SeekRequested(off_t position)
+BAdapterIO::SeekRequested(off_t)
 {
 	CALLED();
 

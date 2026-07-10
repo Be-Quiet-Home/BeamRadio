@@ -141,7 +141,7 @@ StreamIO::GetFlags(int32* flags) const
 
 
 ssize_t
-StreamIO::WriteAt(off_t position, const void* buffer, size_t size)
+StreamIO::WriteAt(off_t, const void*, size_t)
 {
 	return B_NOT_SUPPORTED;
 }
@@ -173,7 +173,7 @@ StreamIO::ReadAt(off_t position, void* buffer, size_t size)
 
 
 status_t
-StreamIO::SetSize(off_t size)
+StreamIO::SetSize(off_t)
 {
 	return B_NOT_SUPPORTED;
 }
@@ -217,8 +217,9 @@ StreamIO::HeadersReceived(BUrlRequest* request)
 		if (httpResult->StatusCode() == 301) {	// Permanent redirect
 			fStation->SetStreamUrl(httpResult->Headers()["location"]);
 			TRACE("Permanently redirected to %s\n", httpResult->Headers()["location"]);
-		} else
+		} else {
 			TRACE("Redirected to %s\n", httpResult->Headers()["location"]);
+		}
 
 		return;
 	}
@@ -240,7 +241,7 @@ StreamIO::HeadersReceived(BUrlRequest* request)
 
 
 ssize_t
-StreamIO::_DataSyncedReceived(const char* data, size_t size, int next)
+StreamIO::_DataSyncedReceived(const char* data, size_t size, int)
 {
 	ssize_t written = fInputAdapter->Write(data, size);
 	fBuffered += written;
@@ -367,7 +368,7 @@ StreamIO::Write(const void* buffer, size_t size)
 
 
 void
-StreamIO::RequestCompleted(BUrlRequest* request, bool success)
+StreamIO::RequestCompleted(BUrlRequest*, bool)
 {
 	fReqThread = -1;
 }
@@ -376,6 +377,9 @@ StreamIO::RequestCompleted(BUrlRequest* request, bool success)
 void
 StreamIO::DebugMessage(BUrlRequest* caller, BUrlProtocolDebugMessage type, const char* text)
 {
+	(void)caller;
+	(void)type;
+	(void)text;
 	DEBUG("Debug Message: %s\n", text);
 }
 

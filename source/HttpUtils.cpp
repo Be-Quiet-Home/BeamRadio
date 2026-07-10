@@ -46,7 +46,7 @@ public:
 		return written;
 	}
 
-	void BytesWritten(BUrlRequest* caller, size_t size) override
+	void BytesWritten(BUrlRequest* caller, size_t) override
 	{
 		if (fLimit == 0)
 			caller->Stop();

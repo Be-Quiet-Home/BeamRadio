@@ -123,7 +123,7 @@ RadioApp::AboutRequested()
  * Application entry point
  */
 int
-main(int argc, char* argv[])
+main()
 {
 	StationFinderRadioNetwork::RegisterSelf();
 

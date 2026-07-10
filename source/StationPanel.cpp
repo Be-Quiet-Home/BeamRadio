@@ -33,7 +33,7 @@
 #define B_TRANSLATION_CONTEXT "StationPanel"
 
 
-StationPanel::StationPanel(MainWindow* mainWindow, bool expanded)
+StationPanel::StationPanel(MainWindow* mainWindow, bool)
 	: BView("stationpanel", B_WILL_DRAW),
 	  fStationItem(NULL),
 	  fMainWindow(mainWindow)
@@ -152,7 +152,7 @@ StationPanel::SetStation(StationListViewItem* stationItem)
 
 
 void
-StationPanel::StateChanged(StreamPlayer::PlayState newState)
+StationPanel::StateChanged(StreamPlayer::PlayState)
 {
 	if (fStationItem != NULL && fStationItem->Player() != NULL
 		&& fStationItem->Player()->State() == StreamPlayer::Playing) {

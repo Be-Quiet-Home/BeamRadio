@@ -98,7 +98,7 @@ LOCAL_INCLUDE_PATHS =
 
 #	Specify the level of optimization that you want. Specify either NONE (O0),
 #	SOME (O1), FULL (O3), or leave blank (for the default optimization level).
-OPTIMIZE = FULL
+OPTIMIZE = NONE
 
 # 	Specify the codes for languages you are going to support in this
 # 	application. The default "en" one must be provided too. "make catkeys"
@@ -127,7 +127,7 @@ SYMBOLS :=
 DEBUGGER :=
 
 #	Specify any additional compiler flags to be used.
-COMPILER_FLAGS = -Wall -Wno-multichar
+COMPILER_FLAGS = -O2 -Wall -Wextra -Wno-multichar
 
 #	Specify any additional linker flags to be used.
 LINKER_FLAGS =
