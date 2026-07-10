@@ -150,7 +150,7 @@ StreamIO::WriteAt(off_t position, const void* buffer, size_t size)
 ssize_t
 StreamIO::ReadAt(off_t position, void* buffer, size_t size)
 {
-	if (fLimit == 0 || position < fLimit) {
+	if (fLimit == 0 || (position >= 0 && static_cast<size_t>(position) < fLimit)) {
 		ssize_t read = BAdapterIO::ReadAt(position, buffer, size);
 		if (read > 0) {
 			TRACE("Read %" B_PRIdSSIZE " of %" B_PRIuSIZE " bytes from position %" B_PRIdOFF
@@ -256,14 +256,15 @@ StreamIO::_DataWithMetaReceived(const char* data, size_t size, int next)
 	while (size > 0) {
 		if (fUntilMetaEnd != 0) {
 			// We are reading metadata
-			if (fUntilMetaEnd <= size) {
+			if (static_cast<size_t>(fUntilMetaEnd) <= size) {
 				// The metadata ends before the buffer
-				memcpy(fMetaBuffer + fMetaSize, (void*)data, fUntilMetaEnd);
+				size_t metaBytes = static_cast<size_t>(fUntilMetaEnd);
+				memcpy(fMetaBuffer + fMetaSize, (void*)data, metaBytes);
 
-				written += fUntilMetaEnd;
-				data += fUntilMetaEnd;
-				size -= fUntilMetaEnd;
-				fMetaSize += fUntilMetaEnd;
+				written += metaBytes;
+				data += metaBytes;
+				size -= metaBytes;
+				fMetaSize += metaBytes;
 				fMetaBuffer[fMetaSize] = 0;
 
 				_ProcessMeta();
@@ -283,16 +284,17 @@ StreamIO::_DataWithMetaReceived(const char* data, size_t size, int next)
 		} else {
 			// No metadata right now, feed content to consumer
 			DataFunc nextFunc = fDataFuncs.Item(next);
-			if (size <= fUntilMetaStart) {
+			if (size <= static_cast<size_t>(fUntilMetaStart)) {
 				written += (*this.*nextFunc)(data, size, next + 1);
 
 				fUntilMetaStart -= size;
 				size = 0;
 			} else {
+				size_t dataBytes = static_cast<size_t>(fUntilMetaStart);
 				// Metadata starts before the end of the buffer
-				written += (*this.*nextFunc)(data, fUntilMetaStart, next + 1);
-				size -= fUntilMetaStart;
-				data += fUntilMetaStart;
+				written += (*this.*nextFunc)(data, dataBytes, next + 1);
+				size -= dataBytes;
+				data += dataBytes;
 
 				fUntilMetaStart = 0;
 				fUntilMetaEnd = *data * 16;
@@ -324,7 +326,7 @@ ssize_t
 StreamIO::_DataUnsyncedReceived(const char* data, size_t size, int next)
 {
 	off_t frameStart;
-	for (frameStart = 0; frameStart < size; frameStart++) {
+	for (frameStart = 0; static_cast<size_t>(frameStart) < size; frameStart++) {
 		if (fFrameSync == none) {
 			if (data[frameStart] == kMpegHeader1) {
 				fFrameSync = first;
@@ -401,10 +403,11 @@ StreamIO::_ProcessMeta()
 		text[matches[1].rm_eo] = 0;
 		text[matches[2].rm_eo] = 0;
 
-		if (text + matches[2].rm_so && !(text + matches[2].rm_so)[0])
+		const char* metaText = matches[2].rm_so >= 0 ? text + matches[2].rm_so : NULL;
+		if (metaText == NULL || metaText[0] == '\0')
 			msg->AddString(strlwr(text + matches[1].rm_so), fIcyName);
 		else
-			msg->AddString(strlwr(text + matches[1].rm_so), text + matches[2].rm_so);
+			msg->AddString(strlwr(text + matches[1].rm_so), metaText);
 
 		text += matches[0].rm_eo;
 	}
