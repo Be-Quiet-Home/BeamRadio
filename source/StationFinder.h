@@ -64,25 +64,25 @@ public:
 	StationFinderServices(){};
 	~StationFinderServices();
 
-	static void Register(char* serviceName, InstantiateFunc);
+	static void Register(const char* serviceName, InstantiateFunc);
 
-	static StationFinderService* Instantiate(char* s);
+	static StationFinderService* Instantiate(const char* s);
 
 	static int32 CountItems();
-	static char* Name(int i);
+	static const char* Name(int i);
 
 private:
-	static std::vector<std::pair<char*, InstantiateFunc> > sServices;
+	static std::vector<std::pair<const char*, InstantiateFunc> > sServices;
 };
 
 class FindByCapability {
 public:
-	FindByCapability(char* name);
-	FindByCapability(char* name, char* keyWords, char* delimiter);
+	FindByCapability(const char* name);
+	FindByCapability(const char* name, const char* keyWords, const char* delimiter);
 	~FindByCapability();
 
 	bool HasKeyWords();
-	void SetKeyWords(char* keyWords, char* delimiter);
+	void SetKeyWords(const char* keyWords, const char* delimiter);
 	const BStringList* KeyWords();
 
 	const char* Name();
@@ -113,7 +113,7 @@ public:
 	int CountCapabilities() const { return findByCapabilities.CountItems(); }
 	FindByCapability* Capability(int index) const { return findByCapabilities.ItemAt(index); }
 
-	static void Register(char* name, InstantiateFunc instantiate);
+	static void Register(const char* name, InstantiateFunc instantiate);
 
 protected:
 	// To be filled by specific StationFinder implementations
@@ -128,8 +128,8 @@ protected:
 
 	// Helper functions
 	BBitmap* RetrieveLogo(BUrl url);
-	FindByCapability* RegisterSearchCapability(char* name);
-	FindByCapability* RegisterSearchCapability(char* name, char* keyWords, char* delimiter);
+	FindByCapability* RegisterSearchCapability(const char* name);
+	FindByCapability* RegisterSearchCapability(const char* name, const char* keyWords, const char* delimiter);
 };
 
 class StationFinderWindow : public BWindow {

@@ -16,7 +16,7 @@
 #define B_TRANSLATION_CONTEXT "StationFinder"
 
 
-std::vector<std::pair<char*, InstantiateFunc> > StationFinderServices::sServices;
+std::vector<std::pair<const char*, InstantiateFunc> > StationFinderServices::sServices;
 
 
 StationFinderServices::~StationFinderServices()
@@ -26,9 +26,9 @@ StationFinderServices::~StationFinderServices()
 
 
 void
-StationFinderServices::Register(char* serviceName, InstantiateFunc instantiate)
+StationFinderServices::Register(const char* serviceName, InstantiateFunc instantiate)
 {
-	std::pair<char*, InstantiateFunc> service(serviceName, instantiate);
+	std::pair<const char*, InstantiateFunc> service(serviceName, instantiate);
 	sServices.push_back(service);
 }
 
@@ -41,10 +41,10 @@ StationFinderServices::CountItems()
 
 
 StationFinderService*
-StationFinderServices::Instantiate(char* name)
+StationFinderServices::Instantiate(const char* name)
 {
 	for (uint32 i = 0; i < sServices.size(); i++) {
-		std::pair<char*, InstantiateFunc> service = sServices[i];
+		std::pair<const char*, InstantiateFunc> service = sServices[i];
 		if (!strcmp(service.first, name))
 			return service.second();
 	}
@@ -53,21 +53,21 @@ StationFinderServices::Instantiate(char* name)
 }
 
 
-char*
+const char*
 StationFinderServices::Name(int i)
 {
 	return sServices[i].first;
 }
 
 
-FindByCapability::FindByCapability(char* name)
+FindByCapability::FindByCapability(const char* name)
 	: fName(name),
 	  fKeywords()
 {
 }
 
 
-FindByCapability::FindByCapability(char* name, char* keyWords, char* delimiter)
+FindByCapability::FindByCapability(const char* name, const char* keyWords, const char* delimiter)
 	: fName(name),
 	  fKeywords()
 {
@@ -103,7 +103,7 @@ FindByCapability::Name()
 
 
 void
-FindByCapability::SetKeyWords(char* keyWords, char* delimiter)
+FindByCapability::SetKeyWords(const char* keyWords, const char* delimiter)
 {
 	BString tmp(keyWords);
 	tmp.Split(delimiter, true, fKeywords);
@@ -131,7 +131,7 @@ StationFinderService::~StationFinderService()
 
 
 void
-StationFinderService::Register(char* name, InstantiateFunc instantiate)
+StationFinderService::Register(const char* name, InstantiateFunc instantiate)
 {
 	StationFinderServices::Register(name, instantiate);
 }
@@ -159,7 +159,7 @@ StationFinderService::RetrieveLogo(BUrl url)
 
 
 FindByCapability*
-StationFinderService::RegisterSearchCapability(char* name)
+StationFinderService::RegisterSearchCapability(const char* name)
 {
 	FindByCapability* newCapability = new FindByCapability(name);
 	findByCapabilities.AddItem(newCapability);
@@ -169,7 +169,7 @@ StationFinderService::RegisterSearchCapability(char* name)
 
 
 FindByCapability*
-StationFinderService::RegisterSearchCapability(char* name, char* keywords, char* delimiter)
+StationFinderService::RegisterSearchCapability(const char* name, const char* keywords, const char* delimiter)
 {
 	FindByCapability* newCapability = new FindByCapability(name, keywords, delimiter);
 	findByCapabilities.AddItem(newCapability);
@@ -382,7 +382,7 @@ StationFinderWindow::MessageReceived(BMessage* msg)
 void
 StationFinderWindow::SelectService(int index)
 {
-	char* serviceName = StationFinderServices::Name(index);
+	const char* serviceName = StationFinderServices::Name(index);
 	if (serviceName == NULL)
 		return;
 
