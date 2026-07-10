@@ -110,7 +110,7 @@ StationFinderListenLive::StationFinderListenLive()
 
 	BString tmp(kCountryList);
 	tmp.Split("\r", true, fCountryKeywordAndPath);
-	FindByCapability* findByCountry = RegisterSearchCapability("Country");
+	FindByCapability* findByCountry = RegisterSearchCapability(B_TRANSLATE("Country"));
 	BStringList* keywords = (BStringList*)findByCountry->KeyWords();
 	for (int32 i = 0; i < fCountryKeywordAndPath.CountStrings(); i++) {
 		BString keyword(fCountryKeywordAndPath.StringAt(i));
@@ -120,7 +120,7 @@ StationFinderListenLive::StationFinderListenLive()
 
 	tmp.SetTo(kGenreList);
 	tmp.Split("\r", true, fGenreKeywordAndPath);
-	FindByCapability* findByGenre = RegisterSearchCapability("Genre");
+	FindByCapability* findByGenre = RegisterSearchCapability(B_TRANSLATE("Genre"));
 	keywords = (BStringList*)findByGenre->KeyWords();
 	for (int32 i = 0; i < fGenreKeywordAndPath.CountStrings(); i++) {
 		BString keyword(fGenreKeywordAndPath.StringAt(i));

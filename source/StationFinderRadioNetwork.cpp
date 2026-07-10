@@ -57,13 +57,13 @@ StationFinderRadioNetwork::StationFinderRadioNetwork()
 	serviceName.SetTo(B_TRANSLATE("Community Radio Browser"));
 	serviceHomePage.SetUrlString("https://www.radio-browser.info");
 
-	RegisterSearchCapability("Name");
-	RegisterSearchCapability("Tag");
-	RegisterSearchCapability("Language");
-	RegisterSearchCapability("Country");
-	RegisterSearchCapability("Country code");
-	RegisterSearchCapability("State/Region");
-	RegisterSearchCapability("Unique identifier");
+	RegisterSearchCapability(B_TRANSLATE("Name"));
+	RegisterSearchCapability(B_TRANSLATE("Tag"));
+	RegisterSearchCapability(B_TRANSLATE("Language"));
+	RegisterSearchCapability(B_TRANSLATE("Country"));
+	RegisterSearchCapability(B_TRANSLATE("Country code"));
+	RegisterSearchCapability(B_TRANSLATE("State/Region"));
+	RegisterSearchCapability(B_TRANSLATE("Unique identifier"));
 }
 
 

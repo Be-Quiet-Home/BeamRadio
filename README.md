@@ -8,9 +8,9 @@ It keeps the existing Haiku-native station/file model, improves buildability, re
 
 ## Status
 
-Revival baseline in progress. Phases 0001 through 0009 established the BeamRadio identity, root build entrypoint, warning cleanup, build flag baseline, re-entry documentation, and a repeatable GUI lifecycle smoke.
+Revival baseline in progress. Phases 0001 through 0010 established the BeamRadio identity, root build entrypoint, warning cleanup, build flag baseline, re-entry documentation, a repeatable GUI lifecycle smoke, and a validated German localization path.
 
-Playback, station storage, search behavior, and visible UI behavior remain intentionally unchanged by these baseline phases.
+Playback, station storage, and network search behavior remain intentionally unchanged by these baseline phases. Phase 0010 localizes existing labels and status messages without changing their behavior.
 
 ## Build
 
@@ -28,7 +28,13 @@ make
 make smoke
 ```
 
-The root `Makefile` delegates visibly to `source/Makefile`. Use `make help` to list the supported root targets.
+The root `Makefile` delegates visibly to `source/Makefile` and binds the validated German catalog into `dist/BeamRadio` after each successful build. Use `make help` to list the supported root targets.
+
+After editing `source/locales/de.catkeys`, rebind it to an existing build with:
+
+```sh
+make catalog-de
+```
 
 For the interactive GUI lifecycle smoke, run:
 
