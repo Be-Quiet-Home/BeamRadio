@@ -39,4 +39,3 @@ help:
 	@echo "  make clean  remove generated build output"
 	@echo "  make smoke  verify built app exists"
 	@echo "  make help   show this help"
-
