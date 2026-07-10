@@ -289,12 +289,12 @@ Station::Probe()
 #endif
 
 	if (buffer == NULL) {
-		fFlags &= !STATION_URI_VALID;
+		fFlags &= ~STATION_URI_VALID;
 		return B_ERROR;
 	}
 
 	if (headers.CountHeaders() == 0) {
-		fFlags &= !STATION_URI_VALID;
+		fFlags &= ~STATION_URI_VALID;
 		delete buffer;
 		return B_TIMED_OUT;
 	}
@@ -507,8 +507,10 @@ Station::Load(BString name, BEntry* entry)
 
 	if (!station->fStreamUrl.IsValid()) {
 		status = file.GetSize(&size);
-		if (size > 10000)
+		if (size > 10000) {
+			delete station;
 			return NULL;
+		}
 
 		char* buffer = (char*)malloc(size);
 		file.Read(buffer, size);
@@ -663,7 +665,7 @@ Station::SetName(BString name)
 	fName.SetTo(name);
 	CleanName();
 	if (fName.IsEmpty())
-		fFlags &= !STATION_HAS_NAME;
+		fFlags &= ~STATION_HAS_NAME;
 	else
 		fFlags |= STATION_HAS_NAME;
 

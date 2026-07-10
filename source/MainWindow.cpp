@@ -130,8 +130,9 @@ MainWindow::MessageReceived(BMessage* message)
 			StationListViewItem* stationItem;
 			BString result;
 			while (message->FindRef("refs", index++, &ref) == B_OK) {
-				Station* station = Station::Load(ref.name, new BEntry(&ref));
-				if ((station = Station::Load(ref.name, new BEntry(&ref)))) {
+				BEntry entry(&ref);
+				Station* station = Station::Load(ref.name, &entry);
+				if (station != NULL) {
 					Station* existingStation = fSettings->Stations->FindItem(station->Name());
 					if (existingStation) {
 						delete station;
@@ -144,8 +145,10 @@ MainWindow::MessageReceived(BMessage* message)
 						result.SetToFormat(
 							B_TRANSLATE("Added station %s to list"), station->Name()->String());
 					}
-				} else
-					result.SetToFormat(B_TRANSLATE("File %s could not be loaded as a station"));
+				} else {
+					result.SetToFormat(
+						B_TRANSLATE("File %s could not be loaded as a station"), ref.name);
+				}
 				fStatusBar->SetText(result.String());
 			}
 
@@ -163,16 +166,27 @@ MainWindow::MessageReceived(BMessage* message)
 
 		case MSG_PASTE_URL:
 		{
-			be_clipboard->Lock();
-			BMessage* data = be_clipboard->Data();
-			be_clipboard->Unlock();
+			BString sUrl;
 
-			char* url;
-			ssize_t numBytes;
-			if (data->FindData("text/plain", B_MIME_TYPE, (const void**)&url, &numBytes) == B_OK)
-				url[numBytes] = 0;
+			if (be_clipboard->Lock()) {
+				BMessage* data = be_clipboard->Data();
+				const char* url = NULL;
+				ssize_t numBytes = 0;
+				if (data != NULL
+					&& data->FindData("text/plain", B_MIME_TYPE, (const void**)&url, &numBytes)
+						== B_OK
+					&& url != NULL
+					&& numBytes > 0) {
+					sUrl.SetTo(url, numBytes);
+				}
+				be_clipboard->Unlock();
+			}
 
-			BString sUrl(url);
+			if (sUrl.IsEmpty()) {
+				fStatusBar->SetText(B_TRANSLATE("Clipboard does not contain a station URL."));
+				break;
+			}
+
 			Station* station = Station::LoadIndirectUrl(sUrl);
 			if (station != NULL) {
 				status_t probeStatus = station->Probe();
@@ -186,8 +200,10 @@ MainWindow::MessageReceived(BMessage* message)
 												"could not be added"),
 						station->Name()->String());
 					(new BAlert(B_TRANSLATE("Add station failed"), msg, B_TRANSLATE("OK")))->Go();
+					delete station;
 				}
-			}
+			} else
+				fStatusBar->SetText(B_TRANSLATE("Clipboard URL could not be loaded as a station."));
 
 			break;
 		}
