@@ -8,9 +8,9 @@ It keeps the existing Haiku-native station/file model, improves buildability, re
 
 ## Status
 
-Revival baseline in progress. Phases 0001 through 0010 established the BeamRadio identity, root build entrypoint, warning cleanup, build flag baseline, re-entry documentation, a repeatable GUI lifecycle smoke, and a validated German localization path.
+Revival baseline in progress. Phases 0001 through 0011 established the BeamRadio identity, root build entrypoint, warning cleanup, build flag baseline, re-entry documentation, a repeatable GUI lifecycle smoke, a validated German localization path, and a structurally consistent multi-language catalog set.
 
-Playback, station storage, and network search behavior remain intentionally unchanged by these baseline phases. Phase 0010 localizes existing labels and status messages without changing their behavior.
+Playback, station storage, and network search behavior remain intentionally unchanged by these baseline phases. Phases 0010 and 0011 change translated presentation and catalog build consistency only.
 
 ## Build
 
@@ -28,13 +28,21 @@ make
 make smoke
 ```
 
-The root `Makefile` delegates visibly to `source/Makefile` and binds the validated German catalog into `dist/BeamRadio` after each successful build. Use `make help` to list the supported root targets.
+The root `Makefile` delegates visibly to `source/Makefile` and binds every declared catalog into `dist/BeamRadio` after each successful build. The canonical locale list lives in `source/locales/locales.mk` and is shared by both Makefiles.
 
-After editing `source/locales/de.catkeys`, rebind it to an existing build with:
+Compile every catalog without changing the application binary with:
 
 ```sh
-make catalog-de
+make catalogs-check
 ```
+
+After editing catalog files, rebind all of them to an existing build with:
+
+```sh
+make catalogs
+```
+
+`make catalog-de` remains available for a targeted German-only rebind. Use `make help` to list the supported root targets.
 
 For the interactive GUI lifecycle smoke, run:
 
@@ -43,6 +51,8 @@ make smoke-gui
 ```
 
 Close the main window to complete the smoke. The application binary is written to `dist/BeamRadio`.
+
+The catalog set is structurally synchronized. Existing translations are preserved; newly introduced keys remain in English in languages that have not yet received a linguistic update. Only the German runtime presentation has been manually validated in this revival track.
 
 ## Scope
 

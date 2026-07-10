@@ -1,4 +1,4 @@
-1	Friulian	application/x-vnd.be-quiet-home-beamradio	1780791103
+1	Friulian	application/x-vnd.be-quiet-home-beamradio	3477159906
 %station% now plays %title%	MainWindow		%station% e trasmet %title%
 About	MainWindow		Informazions
 Add station failed	MainWindow		No si è rivâts a zontâ la stazion
@@ -42,3 +42,14 @@ Station URL	StationPanel		URL de stazion
 Stream URL	StationPanel		URL dal flus
 listenlive.eu [experimental]	StationFinderListenLive		listenlive.eu [sperimentâl]
 BeamRadio	System name		BeamRadio
+Clipboard does not contain a station URL.	MainWindow		Clipboard does not contain a station URL.
+Clipboard URL could not be loaded as a station.	MainWindow		Clipboard URL could not be loaded as a station.
+Country	StationFinderListenLive		Country
+Genre	StationFinderListenLive		Genre
+Country	StationFinderRadioNetwork		Country
+Country code	StationFinderRadioNetwork		Country code
+Language	StationFinderRadioNetwork		Language
+Name	StationFinderRadioNetwork		Name
+State/Region	StationFinderRadioNetwork		State/Region
+Tag	StationFinderRadioNetwork		Tag
+Unique identifier	StationFinderRadioNetwork		Unique identifier

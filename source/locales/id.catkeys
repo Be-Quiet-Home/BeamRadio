@@ -1,4 +1,4 @@
-1	Indonesian	application/x-vnd.be-quiet-home-beamradio	1780791103
+1	Indonesian	application/x-vnd.be-quiet-home-beamradio	3477159906
 %station% now plays %title%	MainWindow		%station% sekarang memutar %title%
 About	MainWindow		Tentang
 Add station failed	MainWindow		Menambahkan stasiun gagal
@@ -42,3 +42,14 @@ Station URL	StationPanel		Stasiun URL
 Stream URL	StationPanel		Aliran URL
 listenlive.eu [experimental]	StationFinderListenLive		listenlive.eu [eksperimen]
 BeamRadio	System name		BeamRadio
+Clipboard does not contain a station URL.	MainWindow		Clipboard does not contain a station URL.
+Clipboard URL could not be loaded as a station.	MainWindow		Clipboard URL could not be loaded as a station.
+Country	StationFinderListenLive		Country
+Genre	StationFinderListenLive		Genre
+Country	StationFinderRadioNetwork		Country
+Country code	StationFinderRadioNetwork		Country code
+Language	StationFinderRadioNetwork		Language
+Name	StationFinderRadioNetwork		Name
+State/Region	StationFinderRadioNetwork		State/Region
+Tag	StationFinderRadioNetwork		Tag
+Unique identifier	StationFinderRadioNetwork		Unique identifier

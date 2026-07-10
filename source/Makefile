@@ -105,7 +105,8 @@ OPTIMIZE = NONE
 # 	will recreate only the "locales/en.catkeys" file. Use it as a template
 # 	for creating catkeys for other languages. All localization files must be
 # 	placed in the "locales" subdirectory.
-LOCALES = ca de en_GB en es fr fur id it nl pt ro sv tr uk
+include locales/locales.mk
+LOCALES = $(BEAMRADIO_LOCALES)
 
 #	Specify all the preprocessor symbols to be defined. The symbols will not
 #	have their values set automatically; you must supply the value (if any) to
@@ -144,6 +145,21 @@ APP_VERSION :=
 #	binary in ~/add-ons/kernel/drivers/dev/video/usb, so that your driver will
 #	appear at /dev/video/usb when loaded. The default is "misc".
 DRIVER_PATH =
+
+.DEFAULT_GOAL := default
+
+.PHONY: catalogs-check
+CATALOG_CHECK_DIR := objects.catalog-check
+
+catalogs-check:
+	@rm -rf "$(CATALOG_CHECK_DIR)"
+	@mkdir -p "$(CATALOG_CHECK_DIR)"
+	@set -e; for lc in $(LOCALES); do \
+		echo "  check: $$lc"; \
+		linkcatkeys -v -o "$(CATALOG_CHECK_DIR)/$$lc.catalog" \
+			-s "$(APP_MIME_SIG)" -l "$$lc" "locales/$$lc.catkeys"; \
+	done
+	@rm -rf "$(CATALOG_CHECK_DIR)"
 
 ## Include the Makefile-Engine
 DEVEL_DIRECTORY := \

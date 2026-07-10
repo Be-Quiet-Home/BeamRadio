@@ -1,4 +1,4 @@
-1	English	application/x-vnd.be-quiet-home-beamradio	1780791103
+1	English	application/x-vnd.be-quiet-home-beamradio	3477159906
 A directory for saving stations has been created in your settings folder. Link this directory to your deskbar menu to play stations directly.	Station		A directory for saving stations has been created in your settings folder. Link this directory to your deskbar menu to play stations directly.
 Station %s did not respond correctly and could not be added	MainWindow		Station %s did not respond correctly and could not be added
 OK	StationFinder		OK
@@ -42,3 +42,14 @@ Name	StationPanel		Name
 Probing station %station% successful	MainWindow		Probing station %station% successful
 Find stations…	MainWindow		Find stations…
 unknown title	MainWindow		unknown title
+Clipboard does not contain a station URL.	MainWindow		Clipboard does not contain a station URL.
+Clipboard URL could not be loaded as a station.	MainWindow		Clipboard URL could not be loaded as a station.
+Country	StationFinderListenLive		Country
+Genre	StationFinderListenLive		Genre
+Country	StationFinderRadioNetwork		Country
+Country code	StationFinderRadioNetwork		Country code
+Language	StationFinderRadioNetwork		Language
+Name	StationFinderRadioNetwork		Name
+State/Region	StationFinderRadioNetwork		State/Region
+Tag	StationFinderRadioNetwork		Tag
+Unique identifier	StationFinderRadioNetwork		Unique identifier

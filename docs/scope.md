@@ -8,9 +8,9 @@ The project keeps the existing Haiku-native station/file model, improves buildab
 
 ## Current status
 
-Phases 0001 through 0010 establish the BeamRadio identity, root build entrypoint, warning cleanup, project-owned build flag baseline, re-entry documentation, GUI lifecycle smoke, and a validated German localization path.
+Phases 0001 through 0011 establish the BeamRadio identity, root build entrypoint, warning cleanup, project-owned build flag baseline, re-entry documentation, GUI lifecycle smoke, a validated German localization path, and a structurally consistent multi-language catalog set.
 
-Playback, station storage behavior, and network search behavior are intentionally unchanged by these baseline phases. Phase 0010 changes translated presentation only.
+Playback, station storage behavior, and network search behavior are intentionally unchanged by these baseline phases. Phases 0010 and 0011 change translated presentation and catalog build consistency only.
 
 ## Goals
 
@@ -18,6 +18,7 @@ Playback, station storage behavior, and network search behavior are intentionall
 - Preserve the existing station-as-file model and BFS attribute direction.
 - Keep Haiku-native UI and system behavior as the default path.
 - Restore a clean, buildable, documented project baseline.
+- Keep every declared localization catalog structurally bindable from one canonical locale list.
 - Improve responsiveness and error culture in later small phases.
 - Treat external, private, or fragile API use as a documented boundary.
 
@@ -49,4 +50,4 @@ The first useful BeamRadio version should:
 - Deskbar integration.
 - Replicant or mini-mode.
 - Packaging / HaikuDepot candidate work.
-- Full multi-language localization refresh beyond the validated German baseline.
+- Linguistic review of the non-German catalogs beyond structural consistency and English fallback entries.
