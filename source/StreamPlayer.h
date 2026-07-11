@@ -31,6 +31,8 @@
 #define MSG_PLAYER_STATE_CHANGED 'mPSC'	 // "player" = StreamPlayer*, "state" = int32(playState)
 #define MSG_PLAYER_BUFFER_LEVEL \
 	'mPBL'	// "player" = StreamPlayer*, "level" = float percent buffer filled
+#define MSG_PLAYER_DECODE_FAILED \
+	'mPDF'	// "player" = StreamPlayer*, "status" = int32(status_t)
 
 
 class Station;
@@ -73,6 +75,7 @@ private:
 
 	status_t fInitStatus;
 	bool fStopRequested;
+	bool fDecodeFailureReported;
 
 	media_codec_info fCodecInfo;
 	media_format fDecodedFormat;

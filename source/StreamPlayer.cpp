@@ -20,6 +20,7 @@
 #include <MediaDecoder.h>
 #include <MediaFile.h>
 #include <MediaTrack.h>
+#include <string.h>
 
 #include "Debug.h"
 #include "StreamIO.h"
@@ -37,6 +38,8 @@ StreamPlayer::StreamPlayer(Station* station, BLooper* notify)
 	  fMediaFile(NULL),
 	  fPlayer(NULL),
 	  fState(StreamPlayer::Stopped),
+	  fStopRequested(false),
+	  fDecodeFailureReported(false),
 	  fFlushCount(0)
 {
 	TRACE("Trying to set player for stream %s\n", station->StreamUrl().UrlString().String());
@@ -173,11 +176,37 @@ StreamPlayer::_GetDecodedChunk(
 	void* cookie, void* buffer, size_t size, const media_raw_audio_format& format)
 {
 	StreamPlayer* player = (StreamPlayer*)cookie;
-	BMediaFile* fMediaFile = player->fMediaFile;
+	if (player->fDecodeFailureReported) {
+		memset(buffer, 0, size);
+		return;
+	}
+
+	BMediaFile* mediaFile = player->fMediaFile;
+	BMediaTrack* track = mediaFile != NULL ? mediaFile->TrackAt(0) : NULL;
+	if (track == NULL) {
+		memset(buffer, 0, size);
+		return;
+	}
 
 	int64 reqFrames
 		= size / format.channel_count / (format.format & media_raw_audio_format::B_AUDIO_SIZE_MASK);
-	fMediaFile->TrackAt(0)->ReadFrames(buffer, &reqFrames, &player->fHeader, &player->fInfo);
+	status_t status
+		= track->ReadFrames(buffer, &reqFrames, &player->fHeader, &player->fInfo);
+	if (status != B_OK) {
+		memset(buffer, 0, size);
+		player->fDecodeFailureReported = true;
+
+		MSG("Stopping playback after decoder read failed for %s - %s\n",
+			player->fStation->Name()->String(), strerror(status));
+
+		if (player->fNotify != NULL) {
+			BMessage notification(MSG_PLAYER_DECODE_FAILED);
+			notification.AddPointer("player", player);
+			notification.AddInt32("status", status);
+			BMessenger(player->fNotify).SendMessage(&notification);
+		}
+		return;
+	}
 
 	if (player->fFlushCount++ > 1000) {
 		player->fFlushCount = 0;
@@ -193,6 +222,7 @@ StreamPlayer::_StartPlayThreadFunc(StreamPlayer* _this)
 
 	_this->_SetState(StreamPlayer::Buffering);
 	_this->fStopRequested = false;
+	_this->fDecodeFailureReported = false;
 	_this->fStream->SetLimiter(0x40000);
 	_this->fMediaFile = new (std::nothrow) BMediaFile(_this->fStream);
 

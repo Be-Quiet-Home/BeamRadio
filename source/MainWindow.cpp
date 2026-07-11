@@ -321,6 +321,20 @@ MainWindow::MessageReceived(BMessage* message)
 			break;
 		}
 
+		case MSG_PLAYER_DECODE_FAILED:
+		{
+			StreamPlayer* player = NULL;
+			if (message->FindPointer("player", (void**)&player) == B_OK && player != NULL) {
+				int stationIndex = fStationList->StationIndex(player->GetStation());
+				if (stationIndex >= 0) {
+					StationListViewItem* stationItem = fStationList->ItemAt(stationIndex);
+					if (stationItem != NULL && stationItem->Player() == player)
+						_TogglePlay(stationItem);
+				}
+			}
+			break;
+		}
+
 		case MSG_PLAYER_BUFFER_LEVEL:
 		{
 			StreamPlayer* player = NULL;
