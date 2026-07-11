@@ -67,6 +67,8 @@ HttpUtils::CheckPort(BUrl url, BUrl* newUrl, uint32 flags)
 	uint16 port;
 	if (url.HasPort())
 		port = url.Port();
+	else if (url.Protocol() == "https")
+		port = 443;
 	else
 		port = 80;
 
@@ -95,12 +97,19 @@ HttpUtils::CheckPort(BUrl url, BUrl* newUrl, uint32 flags)
 		delete socket;
 	}
 
-	// If port number is 80, do not add it to the final URL
-	// Then, prepend the appropiate protocol
-	newUrlString
-		= ipAddress.ToString(ipAddress.Port() != 80).Prepend("://").Prepend(url.Protocol());
-	if (url.HasPath())
-		newUrlString.Append(url.Path());
+	// HTTPS certificates and virtual hosts are tied to the DNS hostname.
+	// Keep the original URL after proving that one resolved address accepts
+	// connections on the HTTPS port. Plain HTTP may still use the reachable
+	// address directly to avoid retrying a dead first DNS result.
+	if (url.Protocol() == "https") {
+		newUrlString = url.UrlString();
+	} else {
+		// If port number is 80, do not add it to the final URL.
+		newUrlString
+			= ipAddress.ToString(ipAddress.Port() != 80).Prepend("://").Prepend(url.Protocol());
+		if (url.HasPath())
+			newUrlString.Append(url.Path());
+	}
 	newUrl->SetUrlString(newUrlString.String());
 
 	return B_OK;
