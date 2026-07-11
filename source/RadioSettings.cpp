@@ -23,6 +23,7 @@
 
 #include "Debug.h"
 #include "RadioSettings.h"
+#include "RuntimeProfile.h"
 
 
 const char* kSettingsFileName = "BeamRadio.settings";
@@ -145,7 +146,7 @@ RadioSettings::Save()
 	BPath configPath;
 	BDirectory configDir;
 	BFile configFile;
-	status = find_directory(B_USER_SETTINGS_DIRECTORY, &configPath);
+	status = RuntimeProfile::SettingsDirectory(configPath);
 	if (status != B_OK)
 		return status;
 
@@ -196,7 +197,7 @@ RadioSettings::_Load()
 	BDirectory configDir;
 	BFile configFile;
 
-	status = find_directory(B_USER_SETTINGS_DIRECTORY, &configPath);
+	status = RuntimeProfile::SettingsDirectory(configPath);
 	if (status != B_OK)
 		return status;
 

@@ -37,6 +37,7 @@ SRCS = \
 	 MainWindow.cpp  \
 	 RadioApp.cpp  \
 	 RadioSettings.cpp  \
+	 RuntimeProfile.cpp  \
 	 Station.cpp  \
 	 StationFinder.cpp  \
 	 StationFinderListenLive.cpp  \

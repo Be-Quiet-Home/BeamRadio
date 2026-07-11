@@ -18,8 +18,11 @@
 
 #include <AboutWindow.h>
 #include <Catalog.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "RadioApp.h"
+#include "RuntimeProfile.h"
 #include "StationFinder.h"
 #include "StationFinderListenLive.h"
 #include "StationFinderRadioNetwork.h"
@@ -74,6 +77,13 @@ RadioApp::ArgvReceived(int32 argc, char** argv)
 	int32 count = 0;
 	for (int32 i = 1; i < argc; i++) {
 		char* arg = argv[i];
+		if (strcmp(arg, "--developer") == 0)
+			continue;
+		if (strcmp(arg, "--victim-profile") == 0) {
+			if (i + 1 < argc)
+				i++;
+			continue;
+		}
 		if (strncmp(arg, "--help", 7) == 0) {
 			printf(
 				B_TRANSLATE("Usage: BeamRadio <filename>\n"
@@ -119,12 +129,44 @@ RadioApp::AboutRequested()
 }
 
 
+static status_t
+ConfigureRuntimeProfile(int argc, char** argv)
+{
+	bool developer = false;
+	const char* victimProfile = NULL;
+
+	for (int32 i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--developer") == 0) {
+			developer = true;
+		} else if (strcmp(argv[i], "--victim-profile") == 0) {
+			if (i + 1 >= argc)
+				return B_BAD_VALUE;
+			victimProfile = argv[++i];
+		}
+	}
+
+	if (!developer && victimProfile == NULL)
+		return B_OK;
+	if (!developer || victimProfile == NULL)
+		return B_NOT_ALLOWED;
+
+	return RuntimeProfile::ConfigureVictim(victimProfile);
+}
+
+
 /**
  * Application entry point
  */
 int
-main()
+main(int argc, char** argv)
 {
+	status_t profileStatus = ConfigureRuntimeProfile(argc, argv);
+	if (profileStatus != B_OK) {
+		fprintf(stderr, "BeamRadio: developer victim profile rejected: %s\n",
+			strerror(profileStatus));
+		return 2;
+	}
+
 	StationFinderRadioNetwork::RegisterSelf();
 
 	// FIXME: "listenlive.eu" no longer seems to exist, though it looks like

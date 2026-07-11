@@ -2,3 +2,4 @@ dist/*
 !dist/.gitkeep
 source/objects*/
 /patches/
+/test-state/

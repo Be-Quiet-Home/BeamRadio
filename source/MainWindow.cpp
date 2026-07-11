@@ -33,11 +33,13 @@
 #include <MenuBar.h>
 #include <MenuItem.h>
 #include <ScrollView.h>
+#include <String.h>
 #include <Url.h>
 #include <View.h>
 
 #include "Debug.h"
 #include "RadioApp.h"
+#include "RuntimeProfile.h"
 
 
 #undef B_TRANSLATION_CONTEXT
@@ -102,6 +104,16 @@ MainWindow::MainWindow()
 
 	fStatusBar->SetExplicitAlignment(BAlignment(B_ALIGN_USE_FULL_WIDTH, B_ALIGN_VERTICAL_UNSET));
 	fStatusBar->SetExplicitMinSize(BSize(10, B_SIZE_UNSET));
+
+	if (RuntimeProfile::IsVictim()) {
+		BString title(B_TRANSLATE_SYSTEM_NAME("BeamRadio"));
+		title.Append(" [DEVELOPER - VICTIM]");
+		SetTitle(title.String());
+
+		BString profileText("Developer victim profile: ");
+		profileText.Append(RuntimeProfile::ProfilePath());
+		fStatusBar->SetText(profileText.String());
+	}
 
 	ResizeToPreferred();
 	CenterOnScreen();

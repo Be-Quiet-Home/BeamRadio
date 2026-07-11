@@ -4,7 +4,11 @@ SOURCE_DIR := source
 include $(SOURCE_DIR)/locales/locales.mk
 CATALOG_LOCALES := $(BEAMRADIO_LOCALES)
 
-.PHONY: all build catalog-de catalogs catalogs-check clean smoke smoke-gui help
+VICTIM_PROFILE_DIR := $(CURDIR)/test-state/victim
+VICTIM_PROFILE_MARKER := $(VICTIM_PROFILE_DIR)/.beamradio-victim-profile
+
+.PHONY: all build catalog-de catalogs catalogs-check clean smoke smoke-gui \
+	prepare-victim reset-victim run-victim help
 
 all: build
 
@@ -63,6 +67,29 @@ smoke:
 		exit 1; \
 	fi
 
+
+prepare-victim: reset-victim
+	@mkdir -p "$(VICTIM_PROFILE_DIR)"
+	@touch "$(VICTIM_PROFILE_MARKER)"
+	@echo "BeamRadio: fresh developer victim profile prepared"
+	@echo "  path: $(VICTIM_PROFILE_DIR)"
+
+reset-victim:
+	@if [ -e "$(VICTIM_PROFILE_DIR)" ] && [ ! -f "$(VICTIM_PROFILE_MARKER)" ]; then \
+		echo "BeamRadio: reset-victim refused: marker missing"; \
+		echo "  path: $(VICTIM_PROFILE_DIR)"; \
+		exit 1; \
+	fi
+	@rm -rf "$(VICTIM_PROFILE_DIR)"
+	@echo "BeamRadio: developer victim profile reset"
+
+run-victim: build
+	@$(MAKE) prepare-victim
+	@echo "BeamRadio: run-victim"
+	@echo "  isolated profile: $(VICTIM_PROFILE_DIR)"
+	@./$(APP) --developer --victim-profile "$(VICTIM_PROFILE_DIR)"
+	@echo "BeamRadio: run-victim ok: application exited cleanly"
+
 smoke-gui: build
 	@echo "BeamRadio: smoke-gui"
 	@echo "  close the main window to complete the smoke"
@@ -79,4 +106,6 @@ help:
 	@echo "  make clean       remove generated build output"
 	@echo "  make smoke       verify built app exists"
 	@echo "  make smoke-gui   launch app and verify clean exit"
+	@echo "  make run-victim  [developer] launch with a fresh isolated profile"
+	@echo "  make reset-victim  [developer] remove only the isolated profile"
 	@echo "  make help        show this help"

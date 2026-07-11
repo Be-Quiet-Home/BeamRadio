@@ -48,6 +48,7 @@
 
 #include "Debug.h"
 #include "HttpUtils.h"
+#include "RuntimeProfile.h"
 
 
 #undef B_TRANSLATION_CONTEXT
@@ -731,8 +732,8 @@ Station::StationDirectory()
 	BPath configPath;
 	BDirectory configDir;
 
-	if (find_directory(B_USER_SETTINGS_DIRECTORY, &configPath) != B_OK)
-		configPath.SetTo("/boot/home/config/settings");
+	if (RuntimeProfile::SettingsDirectory(configPath) != B_OK)
+		return NULL;
 
 	configDir.SetTo(configPath.Path());
 	if (configDir.Contains(kSubDirStations, B_DIRECTORY_NODE))
@@ -741,12 +742,14 @@ Station::StationDirectory()
 		sStationsDirectory = new BDirectory();
 		configDir.CreateDirectory(kSubDirStations, sStationsDirectory);
 
-		BAlert* alert = new BAlert(B_TRANSLATE("Stations directory created"),
-			B_TRANSLATE("A directory for saving stations has been created in your "
-						"settings folder. Link this directory to your deskbar menu "
-						"to play stations directly."),
-			B_TRANSLATE("OK"));
-		alert->Go();
+		if (!RuntimeProfile::IsVictim()) {
+			BAlert* alert = new BAlert(B_TRANSLATE("Stations directory created"),
+				B_TRANSLATE("A directory for saving stations has been created in your "
+							"settings folder. Link this directory to your deskbar menu "
+							"to play stations directly."),
+				B_TRANSLATE("OK"));
+			alert->Go();
+		}
 	}
 
 	return sStationsDirectory;
